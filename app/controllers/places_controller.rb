@@ -12,7 +12,7 @@ class PlacesController < ApplicationController
   def create
     @place = current_user.places.create(place_params)
     if @place.valid?
-      redirect_to @place
+    redirect_to place_path(@place)
     else
       render :new, status: :unprocessable_entity
     end
@@ -20,6 +20,7 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find(params[:id])
+    @comment = Comment.new
   end
 
   def edit
@@ -38,7 +39,7 @@ class PlacesController < ApplicationController
 
     @place.update_attributes(place_params)
     if @place.valid?
-      redirect_to @place
+    redirect_to place_path(@place)
     else
       render :edit, status: :unprocessable_entity
     end
