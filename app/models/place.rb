@@ -1,11 +1,10 @@
 class Place < ActiveRecord::Base
   belongs_to :user
-  has_many :comments
-  has_many :photos
+  has_many :comments, dependent: :destroy
+  has_many :photos, dependent: :destroy
   
-  validates :name, presence: true, length: { minimum: 4}
-  validates :address, presence: true
-  validates :description, presence: true
+  validates_presence_of :name, :address, :description
+  validates_length_of :name, minimum: 4
 
   geocoded_by :address
   after_validation :geocode
